@@ -24,10 +24,16 @@ class ProductCard extends StatelessWidget {
         child: Stack(
           alignment: Alignment.bottomLeft,
           children: [
-            _backgroundImage(),
-            _ProductDetails(),
+            _backgroundImage(
+              url: producto.imagen,
+            ),
+            _ProductDetails(
+              nombre: producto.nombre,
+              id: producto.id!,
+            ),
             Positioned(top: 0, right: 0, child: _PriceTag()),
-            Positioned(top: 0, left: 0, child: _NotAvailable()),
+            if (producto.disponible == false)
+              Positioned(top: 0, left: 0, child: _NotAvailable()),
           ],
         ),
       ),
@@ -82,8 +88,13 @@ class _PriceTag extends StatelessWidget {
 }
 
 class _ProductDetails extends StatelessWidget {
+  final String nombre;
+  final String id;
+
   const _ProductDetails({
     Key? key,
+    required this.nombre,
+    required this.id,
   }) : super(key: key);
 
   @override
@@ -101,14 +112,14 @@ class _ProductDetails extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Disco duro',
+            nombre,
             style: TextStyle(
                 fontSize: 20, color: Colors.white, fontWeight: FontWeight.bold),
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
           ),
           Text(
-            'ID del Disco duro',
+            id,
             style: TextStyle(fontSize: 15, color: Colors.white),
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
@@ -120,8 +131,11 @@ class _ProductDetails extends StatelessWidget {
 }
 
 class _backgroundImage extends StatelessWidget {
+  final String? url;
+
   const _backgroundImage({
     Key? key,
+    this.url,
   }) : super(key: key);
 
   @override
@@ -133,7 +147,7 @@ class _backgroundImage extends StatelessWidget {
         height: 400,
         child: FadeInImage(
           placeholder: AssetImage('assets/jar-loading.gif'),
-          image: NetworkImage('https://via.placeholder.com/400x300'),
+          image: NetworkImage(url!),
           fit: BoxFit.cover,
         ),
       ),
