@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:productos_app/models/models.dart';
 
 class ProductCard extends StatelessWidget {
+  final Producto producto;
+
+  const ProductCard({Key? key, required this.producto}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Padding(

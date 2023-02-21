@@ -13,12 +13,26 @@ class ProductosServices extends ChangeNotifier {
     this.loadProductos();
   }
 
-  Future loadProductos() async {
+  Future<List<Producto>> loadProductos() async {
+    this.isLoading = true;
+    notifyListeners();
+
     final url = Uri.https(_baseURL, 'productos.json');
     final resp = await http.get(url);
 
     final Map<String, dynamic> productosMap = json.decode(resp.body);
 
-    productosMap.forEach((key, value) {});
+    productosMap.forEach((key, value) {
+      final tempProduct = Producto.fromMap(value);
+      tempProduct.id = key;
+      this.productos.add(tempProduct);
+    });
+
+    this.isLoading = false;
+    notifyListeners();
+
+    return this.productos;
+
+    //print(this.productos[1].nombre);
   }
 }
