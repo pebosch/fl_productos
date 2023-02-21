@@ -31,7 +31,12 @@ class ProductCard extends StatelessWidget {
               nombre: producto.nombre,
               id: producto.id!,
             ),
-            Positioned(top: 0, right: 0, child: _PriceTag()),
+            Positioned(
+                top: 0,
+                right: 0,
+                child: _PriceTag(
+                  precio: producto.precio,
+                )),
             if (producto.disponible == false)
               Positioned(top: 0, left: 0, child: _NotAvailable()),
           ],
@@ -65,8 +70,11 @@ class _NotAvailable extends StatelessWidget {
 }
 
 class _PriceTag extends StatelessWidget {
+  final double precio;
+
   const _PriceTag({
     Key? key,
+    required this.precio,
   }) : super(key: key);
 
   @override
@@ -80,7 +88,7 @@ class _PriceTag extends StatelessWidget {
           borderRadius: BorderRadius.only(
               topRight: Radius.circular(25), bottomLeft: Radius.circular(25))),
       child: Text(
-        '99,99€',
+        '$precio€',
         style: TextStyle(color: Colors.white, fontSize: 20),
       ),
     );
@@ -145,11 +153,16 @@ class _backgroundImage extends StatelessWidget {
       child: Container(
         width: double.infinity,
         height: 400,
-        child: FadeInImage(
-          placeholder: AssetImage('assets/jar-loading.gif'),
-          image: NetworkImage(url!),
-          fit: BoxFit.cover,
-        ),
+        child: url == null
+            ? Image(
+                image: AssetImage('assets/no-image.png'),
+                fit: BoxFit.cover,
+              )
+            : FadeInImage(
+                placeholder: AssetImage('assets/jar-loading.gif'),
+                image: NetworkImage(url!),
+                fit: BoxFit.cover,
+              ),
       ),
     );
   }
