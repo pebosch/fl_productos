@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:productos_app/ui/input_decorations.dart';
 
 class ProductScreen extends StatelessWidget {
   const ProductScreen({Key? key}) : super(key: key);
@@ -6,13 +7,18 @@ class ProductScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: SingleChildScrollView(
-      child: Column(children: [
-        _ProductStack(),
-        _ProductForm(),
-        SizedBox(height: 100),
-      ]),
-    ));
+      body: SingleChildScrollView(
+        child: Column(children: [
+          _ProductStack(),
+          _ProductForm(),
+          SizedBox(height: 100),
+        ]),
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.save_outlined),
+        onPressed: () {},
+      ),
+    );
   }
 }
 
@@ -43,7 +49,25 @@ class _ProductForm extends StatelessWidget {
             child: Column(
           children: [
             SizedBox(height: 10),
-            TextFormField(),
+            TextFormField(
+                decoration: InputDecorations.authInputDecoration(
+              hintText: 'Nombre del produto',
+              labelText: 'Nombre:',
+            )),
+            SizedBox(height: 30),
+            TextFormField(
+                keyboardType: TextInputType.number,
+                decoration: InputDecorations.authInputDecoration(
+                  hintText: '150€',
+                  labelText: 'Precio:',
+                )),
+            SizedBox(height: 30),
+            SwitchListTile.adaptive(
+              value: true,
+              title: Text('Disponible'),
+              activeColor: Colors.indigo,
+              onChanged: (value) {},
+            ),
             SizedBox(height: 30),
           ],
         )),
