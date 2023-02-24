@@ -7,6 +7,8 @@ class ProductosServices extends ChangeNotifier {
   final String _baseURL =
       'flutter-productos-59724-default-rtdb.europe-west1.firebasedatabase.app';
   final List<Producto> productos = [];
+  Producto? productoSeleccionado;
+
   bool isLoading = true;
 
   ProductosServices() {

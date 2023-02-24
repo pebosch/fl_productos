@@ -1,15 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:productos_app/ui/input_decorations.dart';
+import 'package:productos_app/services/services.dart';
+import 'package:provider/provider.dart';
 
 class ProductScreen extends StatelessWidget {
   const ProductScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final productService = Provider.of<ProductosServices>(context);
+
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(children: [
-          _ProductStack(),
+          _ProductStack(url: productService.productoSeleccionado?.imagen),
           _ProductForm(),
           SizedBox(height: 100),
         ]),
@@ -77,8 +81,11 @@ class _ProductForm extends StatelessWidget {
 }
 
 class _ProductStack extends StatelessWidget {
+  final String? url;
+
   const _ProductStack({
     Key? key,
+    this.url,
   }) : super(key: key);
 
   @override
@@ -102,11 +109,16 @@ class _ProductStack extends StatelessWidget {
           child: ClipRRect(
             borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(45), topRight: Radius.circular(45)),
-            child: FadeInImage(
-              image: NetworkImage('https://via.placeholder.com/400x300'),
-              placeholder: AssetImage('assets/jar-loading.gif'),
-              fit: BoxFit.cover,
-            ),
+            child: this.url == null
+                ? Image(
+                    image: AssetImage('assets/no-image.png'),
+                    fit: BoxFit.cover,
+                  )
+                : FadeInImage(
+                    image: NetworkImage(this.url!),
+                    placeholder: AssetImage('assets/jar-loading.gif'),
+                    fit: BoxFit.cover,
+                  ),
           ),
         ),
       ),

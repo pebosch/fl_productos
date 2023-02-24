@@ -10,6 +10,7 @@ class Producto {
     this.imagen,
     required this.nombre,
     required this.precio,
+    this.id,
   });
 
   bool disponible;
@@ -35,4 +36,11 @@ class Producto {
         "nombre": nombre,
         "precio": precio,
       };
+
+  Producto copy() => Producto(
+      disponible: disponible,
+      imagen: imagen,
+      nombre: nombre,
+      precio: precio,
+      id: id);
 }
